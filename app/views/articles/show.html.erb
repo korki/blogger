@@ -7,8 +7,10 @@
 </p>
 <p><%= image_tag @article.image.url(:medium) %></p>
 <p><%= @article.body %></p>
+<% if logged_in? %>
 <%= link_to "edit", edit_article_path(@article) %>
 <%= link_to "delete", article_path(@article), method: :delete, data: {confirm: "Really delete the article?"} %>
+<% end %>
 <%= link_to "<< Back to Articles List", articles_path %>
 
 <%= render partial: 'comments/form' %>

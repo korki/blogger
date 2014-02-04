@@ -1,3 +1,5 @@
+require 'time'
+
 class ArticlesController < ApplicationController
 
   include ArticlesHelper
@@ -6,6 +8,11 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all
+
+    @month = @articles.map  do | article|
+      article.created_at.strftime('%m')
+    end.uniq 
+
   end
 
   def show
@@ -42,4 +49,15 @@ class ArticlesController < ApplicationController
     @article.destroy
     redirect_to articles_path
   end
+
+  def show_by_month
+    @month_articles = Article.where("strftime('%m', created_at) = ?", params[:month_name])
+    #@month_articles = @articles.map  do | article|
+    #      article.created_at.strftime('%B') == params[:month_name]
+    #end
+    render 'months/index.html.erb'
+  end
+
+
+
 end

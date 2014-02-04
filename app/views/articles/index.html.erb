@@ -1,4 +1,4 @@
-<h1>All Articles</h1>
+<h1>All Articles </h1>
 
 <ul id="articles">
   <% @articles.each do |article| %>
@@ -7,5 +7,12 @@
     </li>
   <% end %>
 </ul>
+<br />
+<h2>Find by month</h2>
+  <% @month.each do |m| %>
+    <li>
+      <%= link_to (m + ' -- ppp'), month_url(m) %>
+    </li>
+  <% end %>
 
 <%= link_to "Create a New Article", new_article_path, class: "new_article" %>

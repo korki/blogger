@@ -2,15 +2,20 @@ Blogger::Application.routes.draw do
 
   resources :articles do
     resources :comments
+  
   end
 
   resources :tags
   resources :authors
 
+
+
   resources :author_sessions, only: [ :new, :create, :destroy ]
 
   get 'login'  => 'author_sessions#new'
   get 'logout' => 'author_sessions#destroy'  
+  get 'articles/months/:month_name' => 'articles#show_by_month', as: :month
+
 
   root to: 'articles#index'
 
@@ -24,7 +29,7 @@ Blogger::Application.routes.draw do
   #   get 'products/:id' => 'catalog#view'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  # get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

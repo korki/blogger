@@ -12,6 +12,8 @@ Blogger::Application.routes.draw do
   get 'login'  => 'author_sessions#new'
   get 'logout' => 'author_sessions#destroy'  
 
+  get 'popular' => 'articles#popular'
+
   root to: 'articles#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -2,10 +2,11 @@ class ArticlesController < ApplicationController
 
   include ArticlesHelper
 
-  before_filter :require_login, except: [:index, :show]
+  before_filter :require_login, except: [:index, :show, :popular]
 
   def index
     @articles = Article.all
+    @list_name = "All Articles"
   end
 
   def show
@@ -41,5 +42,11 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_path
+  end
+
+  def popular
+    @articles = Article.limit(3).order('view_count desc')
+    @list_name = "Most popular Articles"
+    render 'articles/index.html.erb'
   end
 end

@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
 
   include ArticlesHelper
 
-  before_filter :require_login, except: [:index, :show]
+  before_filter :require_login, except: [:index, :show, :popular]
 
   def index
     @articles = Article.all
@@ -13,11 +13,13 @@ class ArticlesController < ApplicationController
       article.created_at.strftime('%m')
     end.uniq 
 
+    @list_name = "All Articles"
+
   end
 
   def show
     @article = Article.find(params[:id])
-    
+    @article.visit_article
     @comment = Comment.new
     @comment.article_id = @article.id
   end
@@ -52,12 +54,13 @@ class ArticlesController < ApplicationController
 
   def show_by_month
     @month_articles = Article.where("strftime('%m', created_at) = ?", params[:month_name])
-    #@month_articles = @articles.map  do | article|
-    #      article.created_at.strftime('%B') == params[:month_name]
-    #end
     render 'months/index.html.erb'
   end
 
-
+  def popular
+    @articles = Article.limit(3).order('view_count desc')
+    @list_name = "Most popular Articles"
+    render 'articles/index.html.erb'
+  end
 
 end

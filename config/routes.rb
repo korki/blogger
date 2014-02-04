@@ -17,6 +17,8 @@ Blogger::Application.routes.draw do
   get 'articles/months/:month_name' => 'articles#show_by_month', as: :month
 
 
+  get 'popular' => 'articles#popular'
+
   root to: 'articles#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -15,6 +15,10 @@ class ArticlesController < ApplicationController
 
     @list_name = "All Articles"
 
+    respond_to do |format|
+      format.html
+      format.rss { render :template => 'articles/feed.rss.builder', :layout => false }
+    end
   end
 
   def show
